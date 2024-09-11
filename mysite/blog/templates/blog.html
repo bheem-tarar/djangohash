@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="fix">
+    <div class="side-info">
+        <button class="side-info-close"><i class="fal fa-times"></i></button>
+        <div class="side-info-content">
+            <div class="mobile-menu"></div>
+            <div class="contact-infos mb-30">
+                <div class="contact-list mb-30">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li><img src="/static/img/icon/sidebar-icon-1.png" class="img-fluid" alt="icon-img">86 broklyn
+                            street road, New York</li>
+                        <li><img src="/static/img/icon/footer-icon-1.png" class="img-fluid" alt="icon-img"><a
+                                href="mailto:info@sycho24.com">needhelp@company.com</a></li>
+                        <li><img src="/static/img/icon/footer-icon-2.png" class="img-fluid" alt="icon-img"><a
+                                href="tel:926668880000">92 666 888 0000</a></li>
+                    </ul>
+                    <div class="sidebar__menu--social">
+                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="offcanvas-overlay"></div>
+
+<!-- Fullscreen search -->
+<div class="search-wrap">
+    <div class="search-inner">
+        <i class="fal fa-times search-close" id="search-close"></i>
+        <div class="search-cell">
+            <form method="get">
+                <div class="search-field-holder">
+                    <input type="search" class="main-search-input" placeholder="Search Entire Store...">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- end fullscreen search -->
+
+<main>
+    <!-- page title area  -->
+    <section class="page-title-area breadcrumb-spacing" data-background="/static/img/bg/breadcrumb-bg.jpg">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xxl-9">
+                    <div class="page-title-wrapper text-center">
+                        <h3 class="page-title mb-25">Blog</h3>
+                        <div class="breadcrumb-menu">
+                            <nav aria-label="Breadcrumbs" class="breadcrumb-trail breadcrumbs">
+                                <ul class="trail-items">
+                                    <li class="trail-item trail-begin"><a href="home.html"><span>Home</span></a></li>
+                                    <li class="trail-item trail-end"><span>blog</span></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- page title area end -->
+
+    <!-- blog area start  -->
+
+    {% if posts %}
+    <section class="blog-2 pt-120 pb-115">
+        <div class="container">
+            <div class="row">
+                {% for pt in posts %}
+                <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-6 mb-30">
+                    <div class="kblog">
+                        <div class="kblog-img">
+                            <a href="{% url 'blog_details' slug=pt.slug %}">
+                                <img src="{% if pt.feature_image %}{{ pt.feature_image.url }}{% else %}/static/img/blog/default-image.jpg{% endif %}"
+                                    class="img-fluid" alt="{{ pt.title }}">
+                                <span>{{ pt.created_at|date:"d M" }}</span>
+                            </a>
+                        </div>
+                        <div class="kblog-text">
+                            <div class="kblog-meta">
+                                <a href="{% url 'blog_details' slug=pt.slug %}">
+                                    <i class="fal fa-user-circle"></i> {{ pt.author.username }}
+                                </a>
+                                <a href="{% url 'blog_details' slug=pt.slug %}">
+                                    <i class="fal fa-comments"></i> {{pt.comments.count}} Comments
+                                </a>
+                            </div>
+                            <h3 class="kblog-text-title mb-20">
+                                <a href="{% url 'blog_details' slug=pt.slug %}">{{ pt.title }}</a>
+                            </h3>
+                            <div class="kblog-categories mb-10">
+                                Categories: <a href="{% url 'category_detail' slug=pt.category.slug %}">{{ pt.category.title }}</a>
+                            </div>
+                            <div class="kblog-tags mb-20">
+                                Tags: {% for tag in pt.tags.all %}
+                                <a href="{% url 'tag_detail' slug=tag.slug %}">{{ tag.name }}</a>{% if not forloop.last %}{% endif %}
+                                {% endfor %}
+                            </div>
+                            <p class="kblog-description mb-15">
+                                description: <a href="{% url 'blog_details' slug=pt.slug %}">{{ pt.description }}</a>
+                            </p>
+                            <div class="kblog-text-link">
+                                <a href="{% url 'blog_details' slug=pt.slug %}">Read more <i class="far fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schema for each blog post -->
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "BlogPosting",
+                    "mainEntityOfPage": {
+                        "@type": "WebPage",
+                        "@id": "{% url 'blog_details' slug=pt.slug %}"
+                    },
+                    "headline": "{{ pt.title|escapejs }}",
+                    "description": "{{ pt.description|escapejs }}",
+                    "image": "{% if pt.feature_image %}{{ pt.feature_image.url }}{% else %}/static/img/blog/default-image.jpg{% endif %}",
+                    "author": {
+                        "@type": "Person",
+                        "name": "{{ pt.author.username|escapejs }}"
+                    },
+                    "publisher": {
+                        "@type": "Organization",
+                        "name": "Your Blog Name",
+                        "logo": {
+                            "@type": "ImageObject",
+                            "url": "/static/img/logo.png"
+                        }
+                    },
+                    "datePublished": "{{ pt.created_at|date:'Y-m-d' }}",
+                    "dateModified": "{{ pt.created_at|date:'Y-m-d' }}"
+                }
+                { 
+                    "name": "John Doe",
+                    "age": 30,
+                    "city": "New York"
+                    "email": "john.doe@example.com"
+                  }
+                  
+                </script>
+                {% endfor %}
+            </div>
+            <!-- Pagination -->
+            <!-- ... -->
+        </div>
+    </section>
+    {% endif %}
+</main>
+{% endblock %}

@@ -1,0 +1,7 @@
+.goghas
+.env
+.venv
+blog/migrations/
+blog/__pycache__/
+db.sqlite3
+

@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div style="margin-top: 50px;">
+    <section class="contact-area pt-120 pb-80 fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-xxl-5 col-xl-6 col-lg-6">
+                    <div class="section-title-wrapper mb-15">
+                        <h5 class="section-subtitle mb-20">contact with us</h5>
+                        <h2 class="section-title">Speak with our
+                            consultant</h2>
+                    </div>
+                    <div class="contact-info mr-50 mr-xs-0  mr-md-0">
+                        <div class="single-contact-info d-flex align-items-center">
+                            <div class="contact-info-icon">
+                                <a href="#"><i class="fad fa-comments"></i></a>
+                            </div>
+                            <div class="contact-info-text mt-10">
+                                <span>Call Anytime</span>
+                                <h5><a href="tel:926668880000">92 666 888 0000</a></h5>
+                            </div>
+                        </div>
+                        <div class="single-contact-info d-flex align-items-center">
+                            <div class="contact-info-icon">
+                                <a href="#"><i class="fal fa-envelope"></i></a>
+                            </div>
+                            <div class="contact-info-text mt-10">
+                                <span>send email</span>
+                                <h5><a href="mailto:needhelp@company.com">needhelp@company.com</a></h5>
+                            </div>
+                        </div>
+                        <div class="single-contact-info d-flex align-items-center">
+                            <div class="contact-info-icon">
+                                <a href="#"><i class="fal fa-map-marker-alt"></i></a>
+                            </div>
+                            <div class="contact-info-text mt-10">
+                                <span>visit office</span>
+                                <h5><a href="#">86 Road Broklyn Street, New York</a></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-7 col-xl-6 col-lg-6">
+                    <div class="contact-form">
+                        {% if success %}
+                        <div class="alert alert-success" role="alert">
+                            All fields submitted successfully!
+                        </div>
+                        {% endif %}
+                        <form id="contact-form" method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 mb-20">
+                                    <input id="name" name="name" type="text" placeholder="Your Name" required>
+                                    <span class="error-message" style="color: red; display: none;">This field is
+                                        required</span>
+
+                                </div>
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 mb-20">
+                                    <input id="email" name="email" type="email" placeholder="Email Address" required>
+                                    <span class="error-message" style="color: red; display: none;">This field is
+                                        required</span>
+                                </div>
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 mb-20">
+                                    <input id="phone" name="phone" type="text" placeholder="Phone" required>
+                                    <span class="error-message" style="color: red; display: none;">This field is
+                                        required</span>
+                                </div>
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 mb-20">
+                                    <input id="subject" name="subject" type="text" placeholder="Subject" required>
+                                    <span class="error-message" style="color: red; display: none;">This field is
+                                        required</span>
+                                </div>
+                                <div class="col-xxl-12 col-xl-12 col-lg-12 mb-20">
+                                    <textarea id="message" name="message" placeholder="Write Message"
+                                        required></textarea>
+                                    <span class="error-message" style="color: red; display: none;">This field is
+                                        required</span>
+                                </div>
+                                <div class="col-xxl-12 col-xl-12 mb-20">
+                                    <button type="submit" class="theme-btn border-btn">Send a message</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+         </div>
+    </section>
+    </div>
+   
+    
+    <script>
+        $("#contact-form").contact-form({
+             button: "#submit",
+             onSubmit: function () {
+                 alert("Submit Process");
+             },
+             onCompleted: function () {
+                 alert("onCompleted");
+             },
+             onError: function () {
+                 alert("Error Process");
+             }
+        });
+    </script>
+ {% endblock %}
