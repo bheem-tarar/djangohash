@@ -5,6 +5,10 @@ from blog.models import Post,Category,Comment,Tag,Contact
 # from .forms import CommentForm
 from django.shortcuts import reverse
 # from .forms import ContactForm
+from django.http import JsonResponse
+from .models import Contact  
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 
@@ -86,21 +90,44 @@ def category_detail(request, slug):
     posts = Post.objects.filter(category = categoryDetail)
     return render(request, 'category.html', {'posts': posts, 'categoryDetail':categoryDetail})
 
+# def contact(request):
+#     error_message = None
+#     if request.method == 'POST':
+#         name = request.POST.get('name')
+#         email = request.POST.get('email')
+#         phone = request.POST.get('phone')
+#         subject = request.POST.get('subject')
+#         message = request.POST.get('message')
+#         # Check if all required fields are filled
+#         if name and email and phone and subject and message:
+#             # Create and save the contact instance
+#             Contact.objects.create(name=name, email=email, phone=phone, subject=subject, message=message)
+#             return render(request, 'contact.html', {'success': True})
+    
+#         else:
+#             error_message = "Please fill in all required fields."
+#     return render(request, 'contact.html', {'error_message': error_message})
+
+
+
+
 def contact(request):
-    error_message = None
     if request.method == 'POST':
         name = request.POST.get('name')
         email = request.POST.get('email')
         phone = request.POST.get('phone')
         subject = request.POST.get('subject')
         message = request.POST.get('message')
-        # Check if all required fields are filled
-        if name and email and phone and subject and message:
-            # Create and save the contact instance
-            Contact.objects.create(name=name, email=email, phone=phone, subject=subject, message=message)
-            return render(request, 'contact.html', {'success': True})
-    
-        else:
-            error_message = "Please fill in all required fields."
-    return render(request, 'contact.html', {'error_message': error_message})
 
+        contact = Contact.objects.create(
+            name=name,
+            email=email,
+            phone=phone,
+            subject=subject,
+            message=message
+        )
+        
+        return JsonResponse({'success': True, 'message': 'Message sent successfully!'})
+    
+    # return JsonResponse({'success': False, 'message': 'Invalid request method.'})
+    return render(request, 'contact.html', {'error_message': 'error_message'})

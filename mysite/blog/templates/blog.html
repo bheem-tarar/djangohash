@@ -115,40 +115,6 @@
                 </div>
 
                 <!-- Schema for each blog post -->
-                <script type="application/ld+json">
-                {
-                    "@context": "https://schema.org",
-                    "@type": "BlogPosting",
-                    "mainEntityOfPage": {
-                        "@type": "WebPage",
-                        "@id": "{% url 'blog_details' slug=pt.slug %}"
-                    },
-                    "headline": "{{ pt.title|escapejs }}",
-                    "description": "{{ pt.description|escapejs }}",
-                    "image": "{% if pt.feature_image %}{{ pt.feature_image.url }}{% else %}/static/img/blog/default-image.jpg{% endif %}",
-                    "author": {
-                        "@type": "Person",
-                        "name": "{{ pt.author.username|escapejs }}"
-                    },
-                    "publisher": {
-                        "@type": "Organization",
-                        "name": "Your Blog Name",
-                        "logo": {
-                            "@type": "ImageObject",
-                            "url": "/static/img/logo.png"
-                        }
-                    },
-                    "datePublished": "{{ pt.created_at|date:'Y-m-d' }}",
-                    "dateModified": "{{ pt.created_at|date:'Y-m-d' }}"
-                }
-                { 
-                    "name": "John Doe",
-                    "age": 30,
-                    "city": "New York"
-                    "email": "john.doe@example.com"
-                  }
-                  
-                </script>
                 {% endfor %}
             </div>
             <!-- Pagination -->
@@ -157,4 +123,38 @@
     </section>
     {% endif %}
 </main>
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "{% url 'blog_details' slug=pt.slug %}"
+        },
+        "headline": "{{ pt.title|escapejs }}",
+        "description": "{{ pt.description|escapejs }}",
+        "image": "{% if pt.feature_image %}{{ pt.feature_image.url }}{% else %}/static/img/blog/default-image.jpg{% endif %}",
+        "author": {
+            "@type": "Person",
+            "name": "{{ pt.author.username|escapejs }}"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Your Blog Name",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "/static/img/logo.png"
+            }
+        },
+        "datePublished": "{{ pt.created_at|date:'Y-m-d' }}",
+        "dateModified": "{{ pt.created_at|date:'Y-m-d' }}"
+    }
+    { 
+        "name": "John Doe",
+        "age": 30,
+        "city": "New York"
+        "email": "john.doe@example.com"
+      }
+      
+    </script>
 {% endblock %}

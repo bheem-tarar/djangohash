@@ -49,28 +49,7 @@
     {% block style %}{% endblock %}
 
     <!-- Schema.org JSON-LD data for SEO -->
-    <script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "{% block schema_page_name %}kimox{% endblock %}",
-    "description": "{% block schema_description %}Your Page Description{% endblock %}",
-    "url": "http://127.0.0.1:8000/",
-    "publisher": {
-        "@type": "Organization",
-        "name": "Your Site Name",
-        "logo": {
-            "@type": "ImageObject",
-            "url": "{% static 'img/logo/logo.png' %}"
-        }
-    },
-    "image": "{% if pt.thumbnail %}{{ pt.thumbnail.url }}{% else %}{% static 'img/blog/default-thumbnail.jpg' %}{% endif %}",
-    "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "http://127.0.0.1:8000/"
-    }
-}
-</script>
+    
 </head>
 
 <body>
@@ -111,7 +90,7 @@
     </div>
     <!-- end fullscreen search -->
 
-    {% block content %}
+    {% block content %} 
     {% endblock %}
 
     <!-- footer area start here -->
@@ -135,5 +114,35 @@
     <script src="{% static '/js/wow.min.js' %}"></script>
     <script src="{% static '/js/script.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "{% block schema_page_name %}kimox{% endblock %}",
+            "description": "{% block schema_description %}Your Page Description{% endblock %}",
+            "url": "http://127.0.0.1:8000/",
+            "publisher": {
+                "@type": "Organization",
+                "name": "Your Site Name",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "{% static 'img/logo/logo.png' %}"
+                }
+            },
+            "image": "{% if pt.thumbnail %}{{ pt.thumbnail.url }}{% else %}{% static 'img/blog/default-thumbnail.jpg' %}{% endif %}",
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "http://127.0.0.1:8000/"
+            }
+        }
+        </script>
+{% block script %}
+
+
+{% endblock %}
+
+
+
+
 </body>
 </html>
