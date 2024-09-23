@@ -8,6 +8,11 @@ from django.shortcuts import reverse
 from django.http import JsonResponse
 from .models import Contact  
 from django.views.decorators.csrf import csrf_exempt
+import random
+import string
+from django.http import JsonResponse
+
+
 
 
 
@@ -108,9 +113,6 @@ def category_detail(request, slug):
 #             error_message = "Please fill in all required fields."
 #     return render(request, 'contact.html', {'error_message': error_message})
 
-
-
-
 def contact(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -118,16 +120,26 @@ def contact(request):
         phone = request.POST.get('phone')
         subject = request.POST.get('subject')
         message = request.POST.get('message')
+        captcha = request.POST.get('captcha')
 
-        contact = Contact.objects.create(
-            name=name,
-            email=email,
-            phone=phone,
-            subject=subject,
-            message=message
-        )
-        
-        return JsonResponse({'success': True, 'message': 'Message sent successfully!'})
-    
-    # return JsonResponse({'success': False, 'message': 'Invalid request method.'})
+        if captcha == request.session.get('captcha'):  # Validate CAPTCHA
+            Contact.objects.create(
+                name=name,
+                email=email,
+                phone=phone,
+                subject=subject,
+                message=message
+            )
+            return JsonResponse({'success': True, 'message': 'Message sent successfully!'})
+        else:
+            return JsonResponse({'success': False, 'message': 'Invalid CAPTCHA. Please try again.'})
+
     return render(request, 'contact.html', {'error_message': 'error_message'})
+
+
+
+def generate_captcha(request):
+    captcha = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+    request.session['captcha'] = captcha  # Store the captcha in the session
+    return JsonResponse({'captcha': captcha})
+
