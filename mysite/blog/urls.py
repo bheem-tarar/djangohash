@@ -9,7 +9,8 @@ urlpatterns = [
        path('refresh-captcha/', views.generate_captcha, name='refresh_captcha'),  # New CAPTCHA URL
        path('about/', views.about, name='about'),
        path('blog/', views.blog, name='blog'),
-       path('', views.home, name='home'),   
+       path('', views.home, name='home'), 
+         
 ]
 
 

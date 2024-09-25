@@ -6,6 +6,7 @@ from django.urls import reverse
 from ckeditor.fields import RichTextField
 
 
+
 STATUS_CHOICES = (
     ('Active', 'Active'),
     ('Inactive', 'Inactive'),
