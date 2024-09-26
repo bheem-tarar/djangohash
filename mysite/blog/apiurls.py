@@ -4,8 +4,6 @@ from .apiviews import Categortyapiviews,Tagapiviews,Postapiviews,Commentapiviews
 
 
 
-
-
 router = routers.SimpleRouter()
 router.register(r'categories', Categortyapiviews)
 router.register(r'tags',  Tagapiviews)
